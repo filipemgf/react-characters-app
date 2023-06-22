@@ -1,8 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { Route, Routes, NavLink } from 'react-router-dom';
 
 function App() {
 
@@ -19,24 +19,36 @@ function App() {
   }, []);
 
 
-  return (
-    <div className="App">
-      <h1>React Charates App</h1>
-
-      {
-        charactersArr === null 
-        ? "loading...."
-        : <h2>Number of characters in the API: {charactersArr.length}</h2>
-      }
-
-      {charactersArr && charactersArr.map((characterObj) => {
-        return(
+  const renderListOfCharacters = () => {
+    if(charactersArr === null){
+      return <p>loading....</p>;
+    } else {
+      return charactersArr.map((characterObj) => {
+        return (
           <div key={characterObj.id} className="character box">
             Name: {characterObj.name} <br />
             Weapon: {characterObj.weapon}
           </div>
         )
-      })}
+      })
+    }
+  }
+
+  return (
+    <div className="App">
+      <h1>React Charates App</h1>
+
+      <nav>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/about">About</NavLink>
+        <NavLink to="/contact">Contact</NavLink>
+      </nav>
+
+      <Routes>
+        <Route path='/' element={renderListOfCharacters()} />
+        <Route path='/about' element={<p>Display About page</p>} />
+        <Route path='/contact' element={<p>Display Contact page</p>} />
+      </Routes>
 
 
     </div>

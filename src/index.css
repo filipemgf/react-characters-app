@@ -20,6 +20,9 @@ a {
   color:  rgb(221, 59, 0);
   text-shadow: none;
 }
+a.active {
+  color: blue;
+}
 a:hover {
   color:  rgb(141, 37, 0);
 }
