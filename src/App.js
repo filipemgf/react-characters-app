@@ -2,7 +2,9 @@ import './App.css';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { Route, Routes, NavLink, Link } from 'react-router-dom';
+
+import CharacterDetails from "./components/CharacterDetails"
 
 function App() {
 
@@ -27,7 +29,8 @@ function App() {
         return (
           <div key={characterObj.id} className="character box">
             Name: {characterObj.name} <br />
-            Weapon: {characterObj.weapon}
+            Weapon: {characterObj.weapon} <br />
+            <Link to={`/characters/${characterObj.id}`}>More details</Link>
           </div>
         )
       })
@@ -48,6 +51,7 @@ function App() {
         <Route path='/' element={renderListOfCharacters()} />
         <Route path='/about' element={<p>Display About page</p>} />
         <Route path='/contact' element={<p>Display Contact page</p>} />
+        <Route path="/characters/:characterId" element={<CharacterDetails />} />
       </Routes>
 
 
