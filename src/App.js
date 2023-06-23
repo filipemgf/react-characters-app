@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Route, Routes, NavLink, Link } from 'react-router-dom';
 
 import CharacterDetails from "./components/CharacterDetails"
+import AboutPage from "./pages/AboutPage"
 
 function App() {
 
@@ -49,7 +50,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={renderListOfCharacters()} />
-        <Route path='/about' element={<p>Display About page</p>} />
+        <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<p>Display Contact page</p>} />
         <Route path="/characters/:characterId" element={<CharacterDetails />} />
       </Routes>
