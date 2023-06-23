@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
-function CharacterDetails() {
+function CharacterDetails(props) {
 
     const { characterId } = useParams();
+
+    const navigate = useNavigate();
 
     const [details, setDetails] = useState({});
 
@@ -14,7 +16,17 @@ function CharacterDetails() {
                 setDetails(response.data);
             })
             .catch(e => console.log(e))
-    }, [])
+    }, []);
+
+
+    const deleteCharacter = () => {
+        axios.delete(`${process.env.REACT_APP_API_URL}/characters/${characterId}`)
+            .then( (response) => {
+                props.callbackToUpdateList(); // update list of characters 
+                navigate("/"); // redirect to homepage
+            })
+            .catch( e => console.log("Error deleting character from the API...", e));
+    }
 
 
     return (
@@ -23,6 +35,10 @@ function CharacterDetails() {
             Occupation: {details.occupation} <br />
             Weapon: {details.weapon} <br />
             Debt: {details.debt ? "Yes" : "No"} <br />
+
+            <p>
+                <button onClick={deleteCharacter}>Delete this character</button>
+            </p>
 
             <p>
                 <Link to="/">Back</Link>

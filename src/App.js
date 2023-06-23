@@ -11,13 +11,19 @@ function App() {
 
   const [charactersArr, setCharactersArr] = useState(null);
 
+
   useEffect(() => {
+    getCharactersFromApi();
+  }, []);
+  
+
+  const getCharactersFromApi = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/characters`)
-      .then( response => {
+      .then(response => {
         setCharactersArr(response.data);
       })
-      .catch( e => console.log(e))
-  }, []);
+      .catch(e => console.log(e))
+  }
 
 
   const renderListOfCharacters = () => {
@@ -50,7 +56,7 @@ function App() {
         <Route path='/' element={renderListOfCharacters()} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<p>Display Contact page</p>} />
-        <Route path="/characters/:characterId" element={<CharacterDetails />} />
+        <Route path="/characters/:characterId" element={<CharacterDetails callbackToUpdateList={getCharactersFromApi} />} />
       </Routes>
 
 
